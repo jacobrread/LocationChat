@@ -2,11 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import { ApiContext } from '../../utils/api_context';
 import { Button } from '../common/button';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react/cjs/react.production.min';
-import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
-import { map } from 'lodash';
+// import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
+// import { map } from 'lodash';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiamFjb2JyZWFkIiwiYSI6ImNsMTZzNHdpcjE2N2Ezam9kNDJ0NnZ0OTQifQ.ZYf-p5cCBSBz6RXbEsWTDw';
+// mapboxgl.accessToken = 'pk.eyJ1IjoiamFjb2JyZWFkIiwiYSI6ImNsMTZzNHdpcjE2N2Ezam9kNDJ0NnZ0OTQifQ.ZYf-p5cCBSBz6RXbEsWTDw';
 
 export const Home = () => {
   const api = useContext(ApiContext);
@@ -39,9 +38,11 @@ export const Home = () => {
   return (
     <div className="p-4">
       <h1>Welcome {user.firstName}</h1>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      <Button onClick={createRoom}>Create Room</Button>
-      <div>
+      <div class="card">
+        <input class="cht-input" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <Button onClick={createRoom}>Create Room</Button>
+      </div>
+      <div class="card">
         {chatRooms.map((chatRoom) => (
           <div key={chatRoom.id}>
             <Link to={`/chat_rooms/${chatRoom.id}`}>{chatRoom.name}</Link>
