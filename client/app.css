@@ -25,3 +25,14 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
+
+.login-header {
+  font-family: Chalkduster, fantasy;
+  font-size: 46px;
+  text-align: center;
+  width: fit-content;
+}
+
+.logo {
+  width: 25px;
+}

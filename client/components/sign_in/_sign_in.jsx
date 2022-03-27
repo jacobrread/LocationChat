@@ -36,24 +36,30 @@ export const SignIn = () => {
   };
 
   return (
-    <div className="flex flex-row justify-center m-4">
-      <div className="w-96">
-        <Paper>
-          <div>Email</div>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <div>Password</div>
-          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <div className="flex flex-row justify-end mt-2">
-            <Button type="button" onClick={goToSignUp}>
-              Sign up
-            </Button>
-            <div className="pl-2" />
-            <Button type="button" onClick={signIn}>
-              Sign in
-            </Button>
+    <>
+      <div className="flex flex-row justify-center m-4">
+        <div className="w-96">
+          <div className="login-header flex">
+            <h1 className="flex-1">Location Chat</h1>
+            <img src="Earth.jpeg" className="logo flex-1" />
           </div>
-        </Paper>
+          <Paper>
+            <div>Email</div>
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <div>Password</div>
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <div className="flex flex-row justify-end mt-2">
+              <Button type="button" onClick={goToSignUp}>
+                Sign up
+              </Button>
+              <div className="pl-2" />
+              <Button type="button" onClick={signIn}>
+                Sign in
+              </Button>
+            </div>
+          </Paper>
+        </div>
       </div>
-    </div>
+    </>
   );
 };

@@ -38,11 +38,11 @@ export const Home = () => {
   return (
     <div className="p-4">
       <h1>Welcome {user.firstName}</h1>
-      <div class="card">
-        <input class="cht-input" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <div className="card">
+        <input className="cht-input" type="text" value={name} onChange={(e) => setName(e.target.value)} />
         <Button onClick={createRoom}>Create Room</Button>
       </div>
-      <div class="card">
+      <div className="card">
         {chatRooms.map((chatRoom) => (
           <div key={chatRoom.id}>
             <Link to={`/chat_rooms/${chatRoom.id}`}>{chatRoom.name}</Link>
