@@ -14,6 +14,9 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [errorMessage, getErrorMessage] = useState(false);
+  const [validRooms, setValidRooms] = useState([]);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
 
   // useEffect(() => {
   //   navigator.geolocation.getCurrentPosition(
@@ -32,6 +35,29 @@ export const Home = () => {
   //   });
   // });
 
+  // Get user's current position
+  navigator.geolocation.getCurrentPosition((location) => {
+    setLatitude(location.coords.latitude);
+    setLongitude(location.coords.longitude);
+  });
+
+  // Methods to calculate distance between user and a chatRoom
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the earth in km
+    const dLat = deg2rad(lat2 - lat1); // deg2rad below
+    const dLon = deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c; // Distance in km
+    return d;
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+
   useEffect(async () => {
     const res = await api.get('/users/me');
     const { chatRooms } = await api.get('/chat_rooms');
@@ -39,15 +65,29 @@ export const Home = () => {
     setChatRooms(chatRooms);
     setUser(res.user);
     setLoading(false);
+
+    let roomsWithinDistance = [];
+    chatRooms.forEach((room) => {
+      const distance = getDistance(lat, long, room.latitude, room.longitude);
+      // range of 5 kilometers
+      if (distance <= 5) {
+        roomsWithinDistance.push(room);
+      }
+    });
+
+    setValidRooms(roomsWithinDistance);
   }, []);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  //
+  // TODO Why is my createRoom returning a 500 error?
+  //
   const createRoom = async () => {
-    const { chatRoom } = await api.post('/chat_rooms', { name });
-    setChatRooms([...chatRooms, chatRoom]);
+    const { chatRoom } = await api.post('/chat_rooms', { name, latitude, longitude });
+    setChatRooms([...validRooms, chatRoom]);
     setName('');
   };
 
@@ -67,7 +107,7 @@ export const Home = () => {
         <div className="main-column">
           <h2 className="top-space">Avaiable Chat Rooms:</h2>
           <div className="card">
-            {chatRooms.map((chatRoom) => (
+            {validRooms.map((chatRoom) => (
               <div key={chatRoom.id}>
                 <Link to={`/chat_rooms/${chatRoom.id}`}>{chatRoom.name}</Link>
               </div>
