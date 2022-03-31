@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ApiContext } from '../../utils/api_context';
 import { Button } from '../common/button';
 import { useMessages } from '../../utils/use_messages';
@@ -11,7 +11,6 @@ export const ChatRoom = () => {
   const [user, setUser] = useState(null);
   const api = useContext(ApiContext);
   const { id } = useParams();
-  console.log(id);
   const [messages, sendMessage] = useMessages(chatRoom);
 
   useEffect(async () => {
@@ -26,17 +25,32 @@ export const ChatRoom = () => {
 
   return (
     <div>
+      <div className="cht-header flex">
+        <div className="user">{chatRoom.name}</div>
+        <Link to={'/'} className="link">
+          Return to World
+        </Link>
+      </div>
       <div>
         {messages.map((message) => (
           <div key={message.id}>
             <h3>{message.userName}</h3>
             {message.contents}
+            {console.log(messages)}
           </div>
         ))}
       </div>
-      <div>
-        <input class="cht-input" type="text" value={contents} onChange={(e) => setContents(e.target.value)} />
-        <Button onClick={() => sendMessage(contents, user)}>Send</Button>
+      <div className="cht-footer flex">
+        <input className="cht-input" type="text" value={contents} onChange={(e) => setContents(e.target.value)} />
+        <Button
+          onClick={() => {
+            sendMessage(contents, user);
+            setContents('');
+          }}
+          className="cht-button"
+        >
+          Send
+        </Button>
       </div>
     </div>
   );

@@ -4,6 +4,12 @@
 
 @tailwind utilities;
 
+#map {
+  width: 100%;
+  height: 350%;
+  border-radius: 6px;
+}
+
 .footer {
   position: fixed;
   left: 0;
@@ -40,6 +46,17 @@
   padding-bottom: 4px;
   color: black;
   border-radius: 5px;
+  box-shadow: 2px 2px 5px grey;
+}
+
+.link {
+  background-color: #0cb2df;
+  padding: 8px;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px grey;
+  top: 50%;
+  left: 50%
 }
 
 .topnav {
@@ -53,16 +70,60 @@
 }
 
 .cht-input {
+  flex: 4;
   border: 1px black;
   border-radius: 5px;
   box-shadow: 2px 2px 5px grey;
   margin-right: 10px;
+  color: black;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.cht-button {
+  flex: 1;
+  background-color: #0cb2df;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  color: black;
+  border-radius: 5px;
+  /* font-family: Trebuchet MS; */
+  box-shadow: 2px 2px 5px rgb(68, 64, 64);
+}
+
+.cht-footer {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: grey;
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  margin: 10px;
+  width: auto;
+}
+
+.cht-header {
+  background-image: linear-gradient(to right,#0cdfa3, white);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.2);
+  padding: 15px;
 }
 
 .user {
   padding: 5px;
   font-size: 20px;
   font-family: Chalkduster, fantasy;
+  flex: 4;
 }
 
 .top-space {

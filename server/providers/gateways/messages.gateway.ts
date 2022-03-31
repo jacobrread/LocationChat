@@ -8,6 +8,7 @@ import {
   WebSocketServer,
   WsException,
 } from '@nestjs/websockets';
+import { MessagesService } from '../services/messages.service';
 import { Server, Socket } from 'socket.io';
 import { Message } from 'server/entities/message.entity';
 import { ConsoleLogger, UseGuards } from '@nestjs/common';
@@ -15,7 +16,6 @@ import { GatewayAuthGuard } from '../guards/gatewayauth.guard';
 import { JwtService } from '../services/jwt.service';
 import { GatewayJwtBody } from 'server/decorators/gateway_jwt_body.decorator';
 import { JwtBodyDto } from 'server/dto/jwt_body.dto';
-import { MessagesService } from '../services/messages.service';
 
 class ChatMessagePayload {
   contents: string;
@@ -55,6 +55,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
     @MessageBody() payload: ChatMessagePayload,
     @GatewayJwtBody() jwtBody: JwtBodyDto,
   ) {
+    console.log('here is the payload');
     console.log(payload);
     let message = new Message();
     message.contents = payload.contents;
