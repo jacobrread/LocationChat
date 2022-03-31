@@ -27,6 +27,10 @@
   border-radius: 4px;
 }
 
+.card:hover {
+  background-color: lightgray;
+}
+
 .login-header {
   font-family: Chalkduster, fantasy;
   font-size: 46px;
@@ -49,6 +53,10 @@
   box-shadow: 2px 2px 5px grey;
 }
 
+.button:hover {
+  background-color: lightgray;
+}
+
 .link {
   background-color: #0cb2df;
   padding: 8px;
@@ -57,6 +65,10 @@
   box-shadow: 2px 2px 5px grey;
   top: 50%;
   left: 50%
+}
+
+.link:hover {
+  background-color: lightgray;
 }
 
 .topnav {
@@ -91,6 +103,10 @@
   border-radius: 5px;
   /* font-family: Trebuchet MS; */
   box-shadow: 2px 2px 5px rgb(68, 64, 64);
+}
+
+.cht-button:hover {
+  background-color: lightgray;
 }
 
 .cht-footer {
