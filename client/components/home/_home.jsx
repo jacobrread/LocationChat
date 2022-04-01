@@ -16,11 +16,11 @@ export const Home = () => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [saving, setSaving] = useState(false);
+  const [inputError, setInputError] = useState('');
 
   useEffect(async () => {
     const res = await api.get('/users/me');
     const { chatRooms } = await api.get('/chat_rooms');
-    console.log('Chatrooms: ' + chatRooms);
     setChatRooms(chatRooms);
     setUser(res.user);
     setLoading(false);
@@ -31,18 +31,19 @@ export const Home = () => {
       zoom: 9, // starting zoom
     });
 
-    let marker;
+    // map.on('click', () => {
+    //   marker.getElement().onClick = () => {
+    //     console.log('you clicked it');
+    //   };
+    // });
+
     navigator.geolocation.getCurrentPosition(
       (myLocation) => {
         chatRooms.forEach((room) => {
-          marker = new mapboxgl.Marker();
+          const marker = new mapboxgl.Marker({});
           marker.setLngLat([room.longitude, room.latitude]);
           marker.addTo(map);
         });
-
-        // marker = new mapboxgl.Marker();
-        // marker.setLngLat([myLocation.coords.longitude, myLocation.coords.latitude]);
-        // marker.addTo(map);
 
         map.flyTo({
           center: [myLocation.coords.longitude, myLocation.coords.latitude],
@@ -69,6 +70,12 @@ export const Home = () => {
   }
 
   const createRoom = async () => {
+    if (name === '') {
+      setInputError('Chat Room name cannot be blank');
+      return;
+    }
+    window.location.reload();
+
     setSaving(true);
     navigator.geolocation.getCurrentPosition(async (location) => {
       setLatitude(location.coords.latitude);
@@ -113,21 +120,24 @@ export const Home = () => {
         </div>
       </div>
 
+      <div className="error">{inputError}</div>
+
       <div className="row">
         <div className="main-column">
-          <h2 className="top-space">Avaiable Chat Rooms:</h2>
-          <div className="card">
+          <h2>Avaiable Chat Rooms:</h2>
+          <div className="card back-color">
             {validRooms.map((chatRoom) => (
-              <div key={chatRoom.id}>
-                <Link to={`/chat_rooms/${chatRoom.id}`}>{chatRoom.name}</Link>
+              <div key={chatRoom.id} className="flex">
+                <Link to={`/chat_rooms/${chatRoom.id}`} className="chat-room">
+                  {chatRoom.name}
+                </Link>
               </div>
             ))}
           </div>
         </div>
 
         <div className="side-column">
-          <div className="top-space"></div>
-          <div id="map" className="card" />
+          <div id="map" className="fit card" />
           <p>{errorMessage}</p>
         </div>
       </div>

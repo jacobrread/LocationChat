@@ -31,12 +31,11 @@ export const ChatRoom = () => {
           Return to World
         </Link>
       </div>
-      <div>
+      <div className="top-space">
         {messages.map((message) => (
-          <div key={message.id}>
-            <h3>{message.userName}</h3>
-            {message.contents}
-            {console.log(messages)}
+          <div key={message.id} className="message-body">
+            <h3 className="username">{message.userName}</h3>
+            <div className="content">{message.contents}</div>
           </div>
         ))}
       </div>
