@@ -28,7 +28,6 @@ export const Home = () => {
     const map = new mapboxgl.Map({
       container: 'map', // container ID
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
-      // center: [myLocation.coords.longitude, myLocation.coords.latitude], // starting position [lng, lat]
       zoom: 9, // starting zoom
     });
 
@@ -48,7 +47,6 @@ export const Home = () => {
         map.flyTo({
           center: [myLocation.coords.longitude, myLocation.coords.latitude],
         });
-        console.log(myLocation);
         setLatitude(myLocation.coords.latitude);
         setLongitude(myLocation.coords.longitude);
 
@@ -64,15 +62,6 @@ export const Home = () => {
         setErrorMessage(err);
       },
     );
-
-    // // let roomsWithinDistance = [];
-    // chatRooms.forEach((room) => {
-    //   const distance = getDistance(lat, long, room.latitude, room.longitude);
-    //   // range of 5 kilometers
-    //   if (distance <= 5) {
-    //     roomsWithinDistance.push(room);
-    //   }
-    // });
   }, []);
 
   if (loading) {
@@ -81,18 +70,18 @@ export const Home = () => {
 
   const createRoom = async () => {
     setSaving(true);
-    const { chatRoom } = await api.post('/chat_rooms', { name, latitude, longitude });
-    setChatRooms([...validRooms, chatRoom]);
-    setName('');
-    setSaving(false);
-    // navigator.geolocation.getCurrentPosition(async (location) => {
-    //   setLatitude(location.coords.latitude);
-    //   setLongitude(location.coords.longitude);
-    //   const { chatRoom } = await api.post('/chat_rooms', { name, latitude, longitude });
-    //   setChatRooms([...validRooms, chatRoom]);
-    //   setName('');
-    //   setSaving(false);
-    // });
+    navigator.geolocation.getCurrentPosition(async (location) => {
+      setLatitude(location.coords.latitude);
+      setLongitude(location.coords.longitude);
+      const { chatRoom } = await api.post('/chat_rooms', {
+        name,
+        lat: location.coords.latitude,
+        long: location.coords.longitude,
+      });
+      setChatRooms([...validRooms, chatRoom]);
+      setName('');
+      setSaving(false);
+    });
   };
 
   // Functions to calculate distance between user and a chatRoom
